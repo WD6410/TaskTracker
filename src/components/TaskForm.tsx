@@ -41,7 +41,7 @@ const formSchema = z.object({
       message: "Description must be at least 10 characters.",
     })
     .max(160, {
-      message: "Description must not be longer than 30 characters.",
+      message: "Description must not be longer than 160 characters.",
     }),
   dtc: z.date({
     required_error: "A date to complete is required.",
@@ -108,7 +108,7 @@ export default function TaskForm() {
         })
 
         if (res.ok) {
-          router.push('/');
+          router.push('/tasks');
           router.refresh()
           console.log(await res.json());
         }
@@ -130,7 +130,7 @@ export default function TaskForm() {
         const res = await fetch(`/api/tasks/${params.id}`, { method: "DELETE" })
 
         if (res.ok) {
-          router.push('/');
+          router.push('/tasks');
           router.refresh()
           console.log(await res.json());
         }

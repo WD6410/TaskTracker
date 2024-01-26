@@ -6,6 +6,7 @@ export interface ITask extends Document {
     dtc: Date;
     createdAt: Date;
     done: boolean;
+    uid: string;
 }
 
 const taskSchema: Schema<ITask> = new Schema({
@@ -27,6 +28,10 @@ const taskSchema: Schema<ITask> = new Schema({
     done: {
         type: Boolean,
         default: false,
+    },
+    uid: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true
