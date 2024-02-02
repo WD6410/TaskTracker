@@ -22,6 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { toast } from "sonner";
 
 import {
   Popover,
@@ -94,9 +95,13 @@ export default function TaskForm() {
           }
         })
 
+        const data = await res.json();
+
         if (res.ok) {
-          console.log(await res.json());
+          toast.success(data.msg);
           router.refresh();
+        } else {
+          toast.error(data.msg);
         }
       } else {
         const res = await fetch(`/api/tasks/${params.id}`, {
@@ -107,10 +112,14 @@ export default function TaskForm() {
           }
         })
 
+        const data = await res.json();
+
         if (res.ok) {
           router.push('/tasks');
+          toast.success(data.msg);
           router.refresh()
-          console.log(await res.json());
+        } else {
+          toast.error(data.msg);
         }
       }
     } catch (error) {
@@ -131,8 +140,9 @@ export default function TaskForm() {
 
         if (res.ok) {
           router.push('/tasks');
+          const { msg } = await res.json();
+          toast.success(msg)
           router.refresh()
-          console.log(await res.json());
         }
       }
     } catch (error) {

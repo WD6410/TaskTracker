@@ -6,7 +6,7 @@ export default function Home() {
       <div className="bg-[#0a0a0a] rounded-xl p-10">
         <h2 className="text-2xl text-center mb-4">TASKTRAKER</h2>
         <p>
-          with TASKTRACKER create, review, update and delete your tasks
+          with <b>TASKTRACKER</b> create, review, update and delete your tasks
           <br />
           <Link className="font-semibold text-blue-500 text-lg hover:underline" href="/sign-up">Create an account </Link>
           or <Link className="font-semibold text-blue-500 text-lg hover:underline" href="/sign-in">Sing in</Link> to get started.

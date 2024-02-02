@@ -13,7 +13,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         const taskId = params.id;
         const task = await Task.findById(taskId);
 
-        if (!task) return NextResponse.json({ message: "Task not found" }, { status: 404 });
+        if (!task) return NextResponse.json({ msg: "Task not found" }, { status: 404 });
 
         if (!userId || userId !== task.uid) {
             return Response.json({ error: "Unauthorized" }, { status: 401 });
@@ -34,7 +34,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
         const taskId = params.id;
         const task = await Task.findById(taskId);
 
-        if (!task) return NextResponse.json({ message: "Task not found" }, { status: 404 });
+        if (!task) return NextResponse.json({ msg: "Task not found" }, { status: 404 });
 
         if (!userId || userId !== task.uid) {
             return Response.json({ error: "Unauthorized" }, { status: 401 });
@@ -43,7 +43,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
         await Task.deleteOne({ _id: taskId })
 
         return NextResponse.json({
-            msg: `!Tarea '${params.id}' eliminada!`
+            msg: `!Tarea eliminada!`
         });
     } catch (error: any) {
         return NextResponse.json({ err: error.message }, { status: 500 });
@@ -61,16 +61,20 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         const data = await request.json();
         const task = await Task.findById(taskId);
 
-        if (!task) return NextResponse.json({ message: "Task not found" }, { status: 404 });
+        if (!task) return NextResponse.json({ msg: "Task not found" }, { status: 404 });
 
         if (!userId || userId !== task.uid) {
             return Response.json({ error: "Unauthorized" }, { status: 401 });
         }
 
+        if (task.title !== data.title && await Task.findOne({ title: data.title })) {
+            return NextResponse.json({ msg: "Task already exist" }, { status: 409 });
+        }
+
         await Task.findByIdAndUpdate(taskId, data);
 
         return NextResponse.json({
-            msg: `!Tarea '${params.id}' actualizada!`
+            msg: `!Tarea actualizada!`
         });
     } catch (error: any) {
         return NextResponse.json({ err: error.message }, { status: 500 });

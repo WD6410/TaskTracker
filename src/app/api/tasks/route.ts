@@ -12,7 +12,11 @@ export async function POST(req: NextRequest) {
         const { userId } = auth();
         data.uid = userId;
 
-        const task = new Task(data);
+        let task = await Task.findOne({ title: data.title });
+
+        if (task) return NextResponse.json({ msg: "Task already exist" }, { status: 409 });
+
+        task = new Task(data);
         await task.save();
         console.log(task);
 
