@@ -1,24 +1,28 @@
-import Task from "@/models/Task";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
-import { connectionDB } from "@/lib/database";
+import prisma from "@/lib/database"
 import { auth } from "@clerk/nextjs";
 
 export async function POST(req: NextRequest) {
-    connectionDB()
-
     try {
         const data = await req.json();
         const { userId } = auth();
         data.uid = userId;
 
-        let task = await Task.findOne({ title: data.title });
+        let task = await prisma.task.findUnique({
+            where: { title: data.title }
+        });
 
         if (task) return NextResponse.json({ msg: "Task already exist" }, { status: 409 });
 
-        task = new Task(data);
-        await task.save();
-        console.log(task);
+        task = await prisma.task.create({
+            data: {
+                title: data.title,
+                description: data.description,
+                dtc: new Date(data.dtc),
+                uid: data.uid
+            }
+        });
 
         return NextResponse.json({
             msg: "!Se creo la tarea!"

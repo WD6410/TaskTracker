@@ -1,24 +1,15 @@
-import mongoose from "mongoose";
+import { PrismaClient } from '@prisma/client'
 
-const conn = {
-    isConnected: mongoose.ConnectionStates.disconnected
-};
+const prismaClientSingleton = () => {
+    return new PrismaClient()
+}
 
-export const connectionDB = async () => {
-    const uri = process.env.MONGODB_ATLAS_URI;
-    if (!uri) {
-        console.log("La URI de MongoDB no está definida.");
-        return;
-    }
+declare global {
+    var prismaGlobal: undefined | ReturnType<typeof prismaClientSingleton>
+}
 
-    if (conn.isConnected === mongoose.ConnectionStates.connected) return;
+const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
 
-    try {
-        const db = await mongoose.connect(uri);
-        console.log(`Conectado a MongoDB '${db.connection.name}'`);
+export default prisma
 
-        conn.isConnected = db.connections[0].readyState;
-    } catch (error: any) {
-        console.log(error.message);
-    }
-};
+if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma

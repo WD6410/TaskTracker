@@ -1,22 +1,21 @@
-import Task from "@/models/Task";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
-import { connectionDB } from "@/lib/database";
+import prisma from "@/lib/database";
 import { auth } from "@clerk/nextjs";
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-    connectionDB();
-
     try {
         const { userId } = auth();
 
         const taskId = params.id;
-        const task = await Task.findById(taskId);
+        const task = await prisma.task.findUnique({
+            where: { id: taskId }
+        });
 
         if (!task) return NextResponse.json({ msg: "Task not found" }, { status: 404 });
 
         if (!userId || userId !== task.uid) {
-            return Response.json({ error: "Unauthorized" }, { status: 401 });
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
         return NextResponse.json(task);
@@ -26,55 +25,59 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
-    connectionDB();
-
     try {
         const { userId } = auth();
 
         const taskId = params.id;
-        const task = await Task.findById(taskId);
+        const task = await prisma.task.findUnique({
+            where: { id: taskId }
+        });
 
         if (!task) return NextResponse.json({ msg: "Task not found" }, { status: 404 });
 
         if (!userId || userId !== task.uid) {
-            return Response.json({ error: "Unauthorized" }, { status: 401 });
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        await Task.deleteOne({ _id: taskId })
+        await prisma.task.delete({
+            where: { id: taskId }
+        });
 
         return NextResponse.json({
-            msg: `!Tarea eliminada!`
+            msg: `Tarea eliminada`
         });
     } catch (error: any) {
         return NextResponse.json({ err: error.message }, { status: 500 });
     }
 }
 
-
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
-    connectionDB();
-
     try {
         const { userId } = auth();
 
         const taskId = params.id;
         const data = await request.json();
-        const task = await Task.findById(taskId);
+        const task = await prisma.task.findUnique({
+            where: { id: taskId }
+        });
 
         if (!task) return NextResponse.json({ msg: "Task not found" }, { status: 404 });
 
         if (!userId || userId !== task.uid) {
-            return Response.json({ error: "Unauthorized" }, { status: 401 });
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        if (task.title !== data.title && await Task.findOne({ title: data.title })) {
+        if (task.title !== data.title && await prisma.task.findUnique({ where: { title: data.title } })) {
             return NextResponse.json({ msg: "Task already exist" }, { status: 409 });
         }
 
-        await Task.findByIdAndUpdate(taskId, data);
+        await prisma.task.update({
+            where: { id: taskId },
+            data: data
+        });
 
         return NextResponse.json({
-            msg: `!Tarea actualizada!`
+            msg: `Tarea actualizada`
         });
     } catch (error: any) {
         return NextResponse.json({ err: error.message }, { status: 500 });

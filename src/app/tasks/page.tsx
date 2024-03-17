@@ -1,5 +1,4 @@
-import TaskModel, { ITask } from "@/models/Task";
-import { connectionDB } from "@/lib/database";
+import prisma from "@/lib/database"
 import { auth } from "@clerk/nextjs";
 
 import TaskForm from "@/components/TaskForm";
@@ -7,18 +6,22 @@ import Tasks from "@/components/Tasks";
 import Clock from "@/components/Clock";
 
 const loadTasks = async () => {
-  connectionDB();
-
   const { userId } = auth();
 
-  let tasks: ITask[] = await TaskModel.find({ uid: userId }).lean();
+  if (!userId) {
+    throw new Error("User ID is not available");
+  }
 
-  tasks = tasks.map(task => {
-    task._id = task._id.toString();
-    return task;
+  const tasks = await prisma.task.findMany({
+    where: { uid: userId }
   });
 
-  return tasks;
+  return tasks.map(task => {
+    return {
+      ...task,
+      id: task.id.toString()
+    };
+  });
 }
 
 export default async function TasksPage() {
