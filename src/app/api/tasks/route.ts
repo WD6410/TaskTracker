@@ -15,14 +15,7 @@ export async function POST(req: NextRequest) {
 
         if (task) return NextResponse.json({ msg: "Task already exist" }, { status: 409 });
 
-        task = await prisma.task.create({
-            data: {
-                title: data.title,
-                description: data.description,
-                dtc: new Date(data.dtc),
-                uid: data.uid
-            }
-        });
+        task = await prisma.task.create({ data });
 
         return NextResponse.json({
             msg: "!Se creo la tarea!"
