@@ -28,7 +28,7 @@ export default async function TasksPage() {
   const tasks = await loadTasks();
 
   return (
-    <main className="flex items-start">
+    <main className="flex items-start overflow-x-hidden">
       <div className="flex justify-center items-center w-2/5 h-screen">
         <div className="fixed flex flex-col items-center w-2/5 gap-10 p-10">
           <Clock />

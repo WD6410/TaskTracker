@@ -38,7 +38,7 @@ export default function Tasks({ tasks }: { tasks: Task[] }) {
   const sortedTasks = sortTasks(order);
 
   return (
-    <div className="flex flex-col items-end gap-5 w-3/5 p-10">
+    <div className="flex flex-col items-end gap-5 w-3/5 p-10 animate-fade-left">
       <div className="flex gap-2">
         <Select onValueChange={setOrder}>
           <SelectTrigger className="w-[180px]">
