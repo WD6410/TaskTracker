@@ -2,8 +2,10 @@ import prisma from "@/lib/database"
 import { auth } from "@clerk/nextjs";
 
 import TaskForm from "@/components/TaskForm";
-import Tasks from "@/components/Tasks";
 import Clock from "@/components/Clock";
+import { DataTable } from "@/components/ui/data-table";
+
+import { columns } from "./components/columns"
 
 const loadTasks = async () => {
   const { userId } = auth();
@@ -29,13 +31,13 @@ export default async function TasksPage() {
 
   return (
     <main className="flex items-start overflow-x-hidden">
-      <div className="flex justify-center items-center w-2/5 h-screen">
-        <div className="fixed flex flex-col items-center w-2/5 gap-10 p-10">
-          <Clock />
-          <TaskForm />
-        </div>
+      <div className="relative flex flex-col items-center w-2/5 gap-10 p-10">
+        <Clock />
+        <TaskForm />
       </div>
-      <Tasks tasks={tasks} />
+      <div className="w-full bg-black bg-opacity-40 backdrop-blur-xl p-5 mt-10 mx-5 rounded-xl animate-fade-left">
+        <DataTable columns={columns} data={tasks} searchKey="title" />
+      </div>
     </main>
   )
 }

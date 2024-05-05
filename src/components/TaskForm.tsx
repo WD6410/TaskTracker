@@ -8,6 +8,7 @@ import { CalendarIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea"
 import { Calendar } from "@/components/ui/calendar"
@@ -22,13 +23,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "sonner";
-
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 import { useRouter, useParams } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -44,10 +45,12 @@ const formSchema = z.object({
     .max(160, {
       message: "Description must not be longer than 160 characters.",
     }),
-  dtc: z.date({
-    required_error: "A date to complete is required.",
+  priority: z.string({
+    required_error: "Select the task priority",
   }),
-  done: z.boolean().default(false).optional(),
+  status: z.string({
+    required_error: "Select the task status",
+  }),
 })
 
 export default function TaskForm() {
@@ -61,8 +64,7 @@ export default function TaskForm() {
     defaultValues: {
       title: "",
       description: "",
-      dtc: new Date(),
-      done: false
+      status: "todo"
     },
   });
 
@@ -74,8 +76,8 @@ export default function TaskForm() {
 
         form.setValue("title", data.title);
         form.setValue("description", data.description);
-        form.setValue("dtc", new Date(data.dtc));
-        form.setValue("done", data.done);
+        form.setValue("priority", data.priority);
+        form.setValue("status", data.status);
       }
     };
 
@@ -126,31 +128,9 @@ export default function TaskForm() {
       console.log(error);
     } finally {
       setIsLoading(false);
+      form.reset();
     }
   };
-
-  const handleDelete = async (e: React.MouseEvent) => {
-    e.preventDefault();
-
-    try {
-      setIsLoading(true);
-
-      if (window.confirm("Seguro que quieres eliminar esa tarea?")) {
-        const res = await fetch(`/api/tasks/${params.id}`, { method: "DELETE" })
-
-        if (res.ok) {
-          router.push('/tasks');
-          const { msg } = await res.json();
-          toast.success(msg)
-          router.refresh()
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   return (
     <Form {...form}>
@@ -161,17 +141,7 @@ export default function TaskForm() {
         {!params.id ? (
           <h2 className="text-2xl font-semibold text-center">CREATE TASKS</h2>
         ) : (
-          <div className="flex justify-between">
-            <h2 className="text-2xl font-semibold text-center">EDIT TASK</h2>
-            <Button
-              className="rounded-xl"
-              variant={"destructive"}
-              onClick={handleDelete}
-              disabled={isLoading}
-            >
-              {!isLoading ? "Delete" : <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            </Button>
-          </div>
+          <h2 className="text-2xl font-semibold text-center">EDIT TASK</h2>
         )}
         <FormField
           control={form.control}
@@ -212,38 +182,22 @@ export default function TaskForm() {
         />
         <FormField
           control={form.control}
-          name="dtc"
+          name="priority"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Date to complete</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild className="rounded-xl">
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+            <FormItem>
+              <FormLabel>Priority</FormLabel>
+              <Select onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select the task priority" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="high">High</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="low">Low</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
@@ -251,20 +205,23 @@ export default function TaskForm() {
         {params.id && (
           <FormField
             control={form.control}
-            name="done"
+            name="status"
             render={({ field }) => (
-              <FormItem className="flex items-start space-x-3 space-y-0 rounded-xl p-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>
-                    done
-                  </FormLabel>
-                </div>
+              <FormItem>
+                <FormLabel>Status</FormLabel>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select the task priority" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="todo">Todo</SelectItem>
+                    <SelectItem value="in progress">In Progress</SelectItem>
+                    <SelectItem value="done">Done</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
               </FormItem>
             )}
           />
