@@ -11,16 +11,19 @@ export const statuses = [
   {
     value: "todo",
     label: "Todo",
+    color: "text-green-500",
     icon: CircleIcon,
   },
   {
     value: "in progress",
     label: "In Progress",
+    color: "text-yellow-500",
     icon: StopwatchIcon,
   },
   {
     value: "done",
     label: "Done",
+    color: "text-violet-500",
     icon: CheckCircledIcon,
   },
 ];

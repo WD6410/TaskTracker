@@ -14,7 +14,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { Calendar } from "@/components/ui/calendar"
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
   FormControl,
@@ -42,7 +41,7 @@ const formSchema = z.object({
     .min(10, {
       message: "Description must be at least 10 characters.",
     })
-    .max(160, {
+    .max(500, {
       message: "Description must not be longer than 160 characters.",
     }),
   priority: z.string({
