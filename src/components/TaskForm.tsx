@@ -42,7 +42,7 @@ const formSchema = z.object({
       message: "Description must be at least 10 characters.",
     })
     .max(500, {
-      message: "Description must not be longer than 160 characters.",
+      message: "Description must not be longer than 500 characters.",
     }),
   priority: z.string({
     required_error: "Select the task priority",

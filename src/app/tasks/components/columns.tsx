@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { priorities, statuses } from "../data/data"
 
 import CellAction from "./actions"
+import { DataTableColumnHeader } from "@/components/ui/data-table-column-header"
 
 export type Task = {
   id: string
@@ -25,7 +26,9 @@ export const columns: ColumnDef<Task>[] = [
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Status" />
+    ),
     cell: ({ row }) => {
       const status = statuses.find(
         (status) => status.value === row.getValue("status")
@@ -44,10 +47,15 @@ export const columns: ColumnDef<Task>[] = [
         </div>
       )
     },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
   },
   {
     accessorKey: "priority",
-    header: "Priority",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Priority" />
+    ),
     cell: ({ row }) => {
       const priority = priorities.find(
         (priority) => priority.value === row.getValue("priority")
@@ -65,6 +73,9 @@ export const columns: ColumnDef<Task>[] = [
           <span>{priority.label}</span>
         </div>
       )
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
     },
   },
   {
