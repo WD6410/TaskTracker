@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-cover bg-center bg-fixed bg-no-repeat;
-  background-image: url("../../public/danis-lou-Lc2EIgwh1RA-unsplash.jpg");
-}
- 
 @layer base {
   :root {
     --background: 0 0% 100%;
