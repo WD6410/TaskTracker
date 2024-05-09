@@ -36,7 +36,7 @@ export default async function TasksPage() {
         <TaskForm />
       </div>
       <div className="w-full bg-black bg-opacity-40 backdrop-blur-xl p-5 mt-10 mx-5 rounded-xl animate-fade-left">
-        <DataTable columns={columns} data={tasks} searchKey="title" />
+        <DataTable columns={columns} data={tasks} />
       </div>
     </main>
   )
