@@ -135,7 +135,7 @@ export default function TaskForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="max-w-md w-full flex flex-col gap-4 p-10 rounded-xl bg-black bg-opacity-40 backdrop-blur-xl animate-fade"
+        className={`w-full ${params.id ? "max-w-3xl" : null} flex flex-col gap-4 p-10 rounded-xl bg-black bg-opacity-40 backdrop-blur-xl animate-fade`}
       >
         {!params.id ? (
           <h2 className="text-2xl font-semibold text-center">CREATE TASKS</h2>
