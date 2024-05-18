@@ -1,7 +1,5 @@
 import { Metadata } from "next"
 
-import { BackgroundBeams } from "@/components/ui/background-beams"
-
 export const metadata: Metadata = {
   title: 'TASKTRAKER - TASKS',
 }
@@ -12,11 +10,8 @@ export default function TasksDashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <>
-      <main className="z-10 relative">
-        {children}
-      </main>
-      <BackgroundBeams />
-    </>
+    <main className="flex gap-5 pt-14 px-5 overflow-x-hidden">
+      {children}
+    </main>
   )
 }
