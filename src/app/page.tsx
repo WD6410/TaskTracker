@@ -1,16 +1,18 @@
 import Link from "next/link"
 
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+
+const words = `TASKTRAKER`;
+
 export default function Home() {
   return (
     <main className="flex justify-center items-center h-[70vh]">
-      <div className="bg-[#0a0a0a] rounded-xl p-10">
-        <h2 className="text-2xl text-center mb-4">TASKTRAKER</h2>
-        <p>
-          with <b>TASKTRACKER</b> create, review, update and delete your tasks
-          <br />
+      <div className="flex flex-col items-center bg-[#0a0a0a] rounded-xl p-10">
+        <TextGenerateEffect words={words} />
+        <div className="p-5">
           <Link className="font-semibold text-blue-500 text-lg hover:underline" href="/sign-up">Create an account </Link>
           or <Link className="font-semibold text-blue-500 text-lg hover:underline" href="/sign-in">Sing in</Link> to get started.
-        </p>
+        </div>
       </div>
     </main>
   )
