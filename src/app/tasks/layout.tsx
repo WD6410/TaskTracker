@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'TASKTRAKER - TASKS',
 }
 
-export default function DashboardLayout({
+export default function TasksDashboardLayout({
   children,
 }: {
   children: React.ReactNode
