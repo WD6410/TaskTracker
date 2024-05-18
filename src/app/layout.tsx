@@ -6,7 +6,6 @@ import { dark } from "@clerk/themes";
 import Header from "@/components/Header"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css";
-import { BackgroundBeams } from "@/components/ui/background-beams";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,10 +34,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Header />
-            <div className="relative z-10">
-              {children}
-            </div>
-            <BackgroundBeams />
+            {children}
             <Toaster
               richColors
               expand={true}

@@ -5,7 +5,7 @@ export default async function Header() {
   const user = await currentUser();
 
   return (
-    <header className="z-10 sticky top-0 flex justify-around items-center bg-[#0a0a0a] h-20 p-2">
+    <header className="z-50 sticky top-0 flex justify-around items-center bg-[#0a0a0a] h-20 p-2">
       <Link href="/">
         <h1 className="text-3xl text-center font-semibold hover:underline">
           TASKTRAKER
