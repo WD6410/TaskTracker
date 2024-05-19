@@ -1,10 +1,13 @@
 "use client"
+
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
+import Link from "next/link"
+
 import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { ArrowLeft, CalendarIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -171,7 +174,7 @@ export default function TaskForm() {
               <FormControl>
                 <Textarea
                   placeholder="Description of the task"
-                  className="resize-none rounded-xl"
+                  className="max-h-56 rounded-xl"
                   {...field}
                 />
               </FormControl>
@@ -226,14 +229,25 @@ export default function TaskForm() {
           />
 
         )}
-        <Button
-          type="submit"
-          className="w-full rounded-xl"
-          variant={"outline"}
-          disabled={isLoading}
-        >
-          {!isLoading ? "Submit" : <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        </Button>
+        <div className="flex items-center gap-5">
+          {params.id && (
+            <Link
+              href="/tasks"
+              className="flex items-center gap-1 py-2 px-3 rounded-md border hover:underline hover:bg-[#262626] transition duration-200"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Volver
+            </Link>
+          )}
+          <Button
+            type="submit"
+            className="w-full rounded-xl"
+            variant={"outline"}
+            disabled={isLoading}
+          >
+            {!isLoading ? "Submit" : <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          </Button>
+        </div>
       </form>
     </Form>
   )

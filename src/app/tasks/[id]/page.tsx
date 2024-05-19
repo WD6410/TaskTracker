@@ -3,9 +3,9 @@ import React from 'react'
 
 function EditPage() {
   return (
-    <main className='flex justify-center items-center h-[90vh]'>
+    <div className='flex justify-center w-full'>
       <TaskForm />
-    </main>
+    </div>
   )
 }
 
