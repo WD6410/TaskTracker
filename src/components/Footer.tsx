@@ -4,7 +4,7 @@ import { ArrowUpRight, Github, User } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="z-10 absolute bottom-0 w-full flex justify-around text-center p-8">
+    <footer className="z-10 fixed bottom-0 w-full flex justify-around text-center p-8">
       <Link
         href="https://github.com/eltatata"
         target="_blank"
