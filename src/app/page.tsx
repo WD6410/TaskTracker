@@ -21,7 +21,7 @@ export default function Home() {
             href="/tasks"
             className="flex items-center gap-1 p-3 rounded-md font-semibold text-[#8b5cf6] text-lg hover:underline bg-[#171717] hover:bg-[#262626] transition duration-200"
           >
-            Get Started
+            Create a Task
             <ArrowRight className="w-6 h-6" />
           </Link>
         </div>
