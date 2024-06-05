@@ -1,5 +1,6 @@
 import prisma from "@/lib/database"
 import { auth } from "@clerk/nextjs";
+import { format } from 'date-fns';
 
 import TaskForm from "@/components/TaskForm";
 import Clock from "@/components/Clock";
@@ -21,7 +22,8 @@ const loadTasks = async () => {
   return tasks.map(task => {
     return {
       ...task,
-      id: task.id.toString()
+      id: task.id.toString(),
+      createdAt: format(new Date(task.createdAt), 'yyyy-MM-dd'),
     };
   });
 }

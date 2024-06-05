@@ -8,12 +8,13 @@ datasource db {
 }
 
 model Task {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  title       String @unique
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String   @unique
   description String
   status      String
   priority    String
   uid         String
+  createdAt   DateTime @default(now())
 
   @@map("tasks")
 }

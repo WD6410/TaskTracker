@@ -13,6 +13,7 @@ export type Task = {
   description: string
   status: string
   priority: string
+  createdAt: string
 }
 
 export const columns: ColumnDef<Task>[] = [
@@ -23,6 +24,12 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "description",
     header: "Description",
+  },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="createdAt" />
+    )
   },
   {
     accessorKey: "status",
