@@ -3,28 +3,28 @@
 import { useState, useEffect } from "react";
 
 function Clock() {
-  const [hora, setHora] = useState(new Date());
+  const [time, setTime] = useState(new Date());
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setHora(new Date());
+      setTime(new Date());
     }, 1000);
 
     return () => clearTimeout(timeoutId);
-  }, [hora]);
+  }, [time]);
 
-  const horas = hora.getHours();
-  const minutos = hora.getMinutes();
-  const segundos = hora.getSeconds();
+  const hours = time.getHours();
+  const minutes = time.getMinutes();
+  const seconds = time.getSeconds();
 
-  const dateLocal = hora.toLocaleDateString();
+  const dateLocal = time.toLocaleDateString();
 
   return (
     <div className="flex flex-col items-center gap-2 animate-fade-down">
       <div className="flex gap-5 text-7xl font-semibold">
-        <p suppressHydrationWarning key={horas} className="animate-fade-down">{horas < 10 ? "0" + horas : horas}</p>:
-        <p suppressHydrationWarning key={minutos} className="animate-fade-down">{minutos < 10 ? "0" + minutos : minutos}</p>:
-        <p suppressHydrationWarning key={segundos} className="animate-fade-down">{segundos < 10 ? "0" + segundos : segundos}</p>
+        <p suppressHydrationWarning key={hours} className="animate-fade-down">{hours < 10 ? "0" + hours : hours}</p>:
+        <p suppressHydrationWarning key={minutes} className="animate-fade-down">{minutes < 10 ? "0" + minutes : minutes}</p>:
+        <p suppressHydrationWarning key={seconds} className="animate-fade-down">{seconds < 10 ? "0" + seconds : seconds}</p>
       </div>
       <p className="text-3xl">{dateLocal}</p>
     </div>
