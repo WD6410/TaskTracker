@@ -23,7 +23,9 @@ const loadTasks = async () => {
     return {
       ...task,
       id: task.id.toString(),
-      createdAt: format(new Date(task.createdAt), 'yyyy-MM-dd'),
+      startDate: task.startDate ? format(new Date(task.startDate), 'MMM d, yyyy') : null,
+      endDate: task.endDate ? format(new Date(task.endDate), 'MMM d, yyyy') : null,
+      createdAt: format(new Date(task.createdAt), 'MMM d, yyyy'),
     };
   });
 }

@@ -13,6 +13,8 @@ export type Task = {
   description: string
   status: string
   priority: string
+  startDate: string | null
+  endDate: string | null
   createdAt: string
 }
 
@@ -84,6 +86,18 @@ export const columns: ColumnDef<Task>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
+  },
+  {
+    accessorKey: "startDate",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Start Date" />
+    )
+  },
+  {
+    accessorKey: "endDate",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="End Date" />
+    )
   },
   {
     id: "actions",
