@@ -39,7 +39,7 @@ export default async function TasksPage() {
         <Clock />
         <TaskForm />
       </div>
-      <div className="w-full bg-black bg-opacity-40 backdrop-blur-xl p-5 rounded-xl animate-fade-left">
+      <div className="w-full bg-black bg-opacity-40 backdrop-blur-xl p-5 mb-4 rounded-xl animate-fade-left">
         <DataTable columns={columns} data={tasks} />
       </div>
     </>

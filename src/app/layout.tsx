@@ -6,7 +6,6 @@ import { dark } from "@clerk/themes";
 import Header from "@/components/Header"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css";
-import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,7 +35,6 @@ export default function RootLayout({
           >
             <Header />
             {children}
-            <Footer />
             <Toaster
               richColors
               expand={true}
