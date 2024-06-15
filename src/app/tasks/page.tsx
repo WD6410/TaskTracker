@@ -1,12 +1,14 @@
 import prisma from "@/lib/database"
+
 import { auth } from "@clerk/nextjs";
 import { format } from 'date-fns';
 
-import TaskForm from "@/components/task-form";
-import Clock from "@/components/clock";
+import { columns } from "./components/columns"
+
 import { DataTable } from "@/components/ui/data-table";
 
-import { columns } from "./components/columns"
+import Clock from "@/components/clock";
+import CreateTask from "@/components/create-task";
 
 const loadTasks = async () => {
   const { userId } = auth();
@@ -34,14 +36,14 @@ export default async function TasksPage() {
   const tasks = await loadTasks();
 
   return (
-    <>
-      <div className="flex flex-col items-center w-2/5 gap-10">
+    <div className="space-y-4 px-8">
+      <div className="w-full flex items-center justify-between">
         <Clock />
-        <TaskForm />
+        <CreateTask />
       </div>
       <div className="w-full bg-black bg-opacity-40 backdrop-blur-xl p-5 mb-4 rounded-xl animate-fade-left">
         <DataTable columns={columns} data={tasks} />
       </div>
-    </>
+    </div>
   )
 }

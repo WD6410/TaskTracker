@@ -20,13 +20,13 @@ function Clock() {
   const dateLocal = time.toLocaleDateString();
 
   return (
-    <div className="flex flex-col items-center gap-2 animate-fade-down">
-      <div className="flex gap-5 text-7xl font-semibold">
-        <p suppressHydrationWarning key={hours} className="animate-fade-down">{hours < 10 ? "0" + hours : hours}</p>:
-        <p suppressHydrationWarning key={minutes} className="animate-fade-down">{minutes < 10 ? "0" + minutes : minutes}</p>:
-        <p suppressHydrationWarning key={seconds} className="animate-fade-down">{seconds < 10 ? "0" + seconds : seconds}</p>
+    <div className="flex flex-col items-center animate-fade-down">
+      <div className="flex gap-2 text-3xl font-bold">
+        <p suppressHydrationWarning>{hours < 10 ? "0" + hours : hours}</p>:
+        <p suppressHydrationWarning>{minutes < 10 ? "0" + minutes : minutes}</p>:
+        <p suppressHydrationWarning>{seconds < 10 ? "0" + seconds : seconds}</p>
       </div>
-      <p className="text-3xl">{dateLocal}</p>
+      <p className="text-md font-medium">{dateLocal}</p>
     </div>
   )
 }
