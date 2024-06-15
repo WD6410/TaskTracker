@@ -64,10 +64,6 @@ export function DataTable<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
 
-  React.useEffect(() => {
-    table.setPageSize(6)
-  }, [])
-
   return (
     <div className="space-y-4">
       <DataTableToolbar table={table} />
