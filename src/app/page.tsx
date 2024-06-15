@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { Vortex } from "@/components/ui/vortex";
-import Footer from "@/components/Footer";
+import Footer from "@/components/footer";
 
 const words = `A fullstack platform to manage your tasks and be more efficient`;
 

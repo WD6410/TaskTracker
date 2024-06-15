@@ -2,8 +2,8 @@ import prisma from "@/lib/database"
 import { auth } from "@clerk/nextjs";
 import { format } from 'date-fns';
 
-import TaskForm from "@/components/TaskForm";
-import Clock from "@/components/Clock";
+import TaskForm from "@/components/task-form";
+import Clock from "@/components/clock";
 import { DataTable } from "@/components/ui/data-table";
 
 import { columns } from "./components/columns"

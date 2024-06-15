@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from '@clerk/nextjs'
 import { ThemeProvider } from "@/components/theme-provider"
 import { dark } from "@clerk/themes";
-import Header from "@/components/Header"
+import Header from "@/components/header"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css";
 
