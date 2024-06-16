@@ -68,6 +68,9 @@ export default function CreateTask() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      title: "",
+      description: "",
+      priority: "medium",
       status: "todo",
     },
   });
@@ -75,8 +78,6 @@ export default function CreateTask() {
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsLoading(true);
-
-      console.log(values)
 
       const res = await fetch("/api/tasks", {
         method: "POST",
