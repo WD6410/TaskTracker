@@ -38,6 +38,7 @@ export default function RootLayout({
             <Toaster
               richColors
               expand={true}
+              position="top-center"
             />
           </ThemeProvider>
         </body>
