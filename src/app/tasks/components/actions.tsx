@@ -6,9 +6,9 @@ import { toast } from "sonner";
 
 import { useRouter } from "next/navigation";
 
-import { Task } from "./columns";
+import { Task } from "@prisma/client";
 
-import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
+import { Edit, MoreHorizontal, Trash } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -27,6 +27,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button";
+import EditTask from "@/components/edit-task";
 
 interface CellActionProps {
   data: Task
@@ -35,16 +36,12 @@ interface CellActionProps {
 export default function CellAction({ data }: CellActionProps) {
   const router = useRouter();
 
-  const [open, setOpen] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const onCopy = (id: string) => {
-    navigator.clipboard.writeText(id);
-    toast.success("Product id copied to the clipboard.");
-  }
-
   const onClose = () => {
-    setOpen(false)
+    setOpenAlert(false)
   }
 
   const handleDelete = async (e: React.MouseEvent) => {
@@ -54,7 +51,7 @@ export default function CellAction({ data }: CellActionProps) {
       setLoading(true);
       await fetch(`/api/tasks/${data.id}`, { method: "DELETE" })
       router.refresh();
-      toast.success('product deleted.');
+      toast.success('Task deleted successfully.');
     } catch (error) {
       console.log(error);
     } finally {
@@ -75,21 +72,24 @@ export default function CellAction({ data }: CellActionProps) {
         <DropdownMenuContent>
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => onCopy(data.id)}>
-            <Copy className="mr-2 h-4 w-4" />
-            Copy Id
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => router.push(`tasks/${data.id}`)}>
+          <DropdownMenuItem onClick={() => setOpenEdit(true)}>
             <Edit className="mr-2 h-4 w-4" />
-            Update
+            Edit
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setOpen(true)}>
+          <DropdownMenuItem onClick={() => setOpenAlert(true)}>
             <Trash className="mr-2 h-4 w-4 " />
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <AlertDialog open={open} onOpenChange={onClose}>
+
+      <EditTask
+        task={data}
+        isOpen={openEdit}
+        onClose={() => setOpenEdit(false)}
+      />
+
+      <AlertDialog open={openAlert} onOpenChange={onClose}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -101,7 +101,7 @@ export default function CellAction({ data }: CellActionProps) {
             <Button
               variant="outline"
               disabled={loading}
-              onClick={() => setOpen(false)}
+              onClick={() => setOpenAlert(false)}
             >
               Cancel
             </Button>
