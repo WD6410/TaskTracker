@@ -1,5 +1,7 @@
 "use client"
 
+import { format } from 'date-fns';
+
 import { ColumnDef } from "@tanstack/react-table"
 
 import { priorities, statuses } from "../data/data"
@@ -7,16 +9,7 @@ import { priorities, statuses } from "../data/data"
 import CellAction from "./actions"
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header"
 
-export type Task = {
-  id: string
-  title: string
-  description: string
-  status: string
-  priority: string
-  startDate: string | null
-  endDate: string | null
-  createdAt: string
-}
+import { Task } from "@prisma/client"
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -31,7 +24,10 @@ export const columns: ColumnDef<Task>[] = [
     accessorKey: "createdAt",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="createdAt" />
-    )
+    ),
+    cell: ({ row }) => {
+      return format(new Date(row.getValue("createdAt")), 'MMM d, yyyy')
+    }
   },
   {
     accessorKey: "status",
@@ -91,13 +87,31 @@ export const columns: ColumnDef<Task>[] = [
     accessorKey: "startDate",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Start Date" />
-    )
+    ),
+    cell: ({ row }) => {
+      if (!row.getValue("startDate")) {
+        return (
+          <p className='text-muted'>not defined</p>
+        );
+      }
+      
+      return format(new Date(row.getValue("startDate")), 'MMM d, yyyy')
+    }
   },
   {
     accessorKey: "endDate",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="End Date" />
-    )
+    ),
+    cell: ({ row }) => {
+      if (!row.getValue("endDate")) {
+        return (
+          <p className='text-muted'>not defined</p>
+        );
+      }
+      
+      return format(new Date(row.getValue("endDate")), 'MMM d, yyyy')
+    }
   },
   {
     id: "actions",

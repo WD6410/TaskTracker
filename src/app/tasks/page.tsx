@@ -1,7 +1,6 @@
 import prisma from "@/lib/database"
 
 import { auth } from "@clerk/nextjs";
-import { format } from 'date-fns';
 
 import { columns } from "./components/columns"
 
@@ -21,22 +20,14 @@ const loadTasks = async () => {
     where: { uid: userId }
   });
 
-  return tasks.map(task => {
-    return {
-      ...task,
-      id: task.id.toString(),
-      startDate: task.startDate ? format(new Date(task.startDate), 'MMM d, yyyy') : null,
-      endDate: task.endDate ? format(new Date(task.endDate), 'MMM d, yyyy') : null,
-      createdAt: format(new Date(task.createdAt), 'MMM d, yyyy'),
-    };
-  });
+  return tasks;
 }
 
 export default async function TasksPage() {
   const tasks = await loadTasks();
 
   return (
-    <div className="space-y-4 px-8">
+    <>
       <div className="w-full flex items-center justify-between">
         <Clock />
         <CreateTask />
@@ -44,6 +35,6 @@ export default async function TasksPage() {
       <div className="w-full bg-black bg-opacity-40 backdrop-blur-xl p-5 mb-4 rounded-xl animate-fade-left">
         <DataTable columns={columns} data={tasks} />
       </div>
-    </div>
+    </>
   )
 }

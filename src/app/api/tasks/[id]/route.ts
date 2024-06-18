@@ -44,7 +44,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
         });
 
         return NextResponse.json({
-            msg: `Tarea eliminada`
+            msg: `Task deleted successfully`
         });
     } catch (error: any) {
         return NextResponse.json({ err: error.message }, { status: 500 });
@@ -77,7 +77,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         });
 
         return NextResponse.json({
-            msg: `Tarea actualizada`
+            msg: `Task updated successfully`
         });
     } catch (error: any) {
         return NextResponse.json({ err: error.message }, { status: 500 });

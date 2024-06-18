@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
         task = await prisma.task.create({ data });
 
         return NextResponse.json({
-            msg: "!Se creo la tarea!"
+            msg: "!Task created successfully!"
         }, { status: 201 });
     } catch (error: any) {
         return NextResponse.json({ err: error.message }, { status: 500 });
