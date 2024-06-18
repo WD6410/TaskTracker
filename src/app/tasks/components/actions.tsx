@@ -18,16 +18,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button";
 import EditTask from "@/components/edit-task";
+import DeleteAlert from "@/components/delete-alert";
 
 interface CellActionProps {
   data: Task
@@ -44,9 +37,7 @@ export default function CellAction({ data }: CellActionProps) {
     setOpenAlert(false)
   }
 
-  const handleDelete = async (e: React.MouseEvent) => {
-    e.preventDefault();
-
+  const handleDelete = async () => {
     try {
       setLoading(true);
       await fetch(`/api/tasks/${data.id}`, { method: "DELETE" })
@@ -89,32 +80,12 @@ export default function CellAction({ data }: CellActionProps) {
         onClose={() => setOpenEdit(false)}
       />
 
-      <AlertDialog open={openAlert} onOpenChange={onClose}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your task.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <Button
-              variant="outline"
-              disabled={loading}
-              onClick={() => setOpenAlert(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="destructive"
-              disabled={loading}
-              onClick={handleDelete}
-            >
-              Confirm
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <DeleteAlert
+        isOpen={openAlert}
+        loading={loading}
+        onClose={onClose}
+        onConfirm={handleDelete}
+      />
     </>
   )
 }
