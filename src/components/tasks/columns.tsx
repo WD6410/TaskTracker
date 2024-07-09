@@ -8,9 +8,9 @@ import Markdown from 'react-markdown';
 
 import { ColumnDef } from "@tanstack/react-table"
 
-import { priorities, statuses } from "../data/data"
+import { priorities, statuses } from "./data"
 
-import CellAction from "./actions"
+import CellAction from "./cell-actions"
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header"
 
 import { Task } from "@prisma/client"

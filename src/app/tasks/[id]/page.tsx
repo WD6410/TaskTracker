@@ -2,8 +2,7 @@ import prisma from "@/lib/database";
 
 import { auth } from "@clerk/nextjs";
 
-import Markdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+import Client from "@/components/tasks/client";
 
 const loadTask = async (id: string) => {
   try {
@@ -29,12 +28,5 @@ export default async function Task({ params }: { params: { id: string } }) {
     return <div>Task not found</div>
   }
 
-  return (
-    <Markdown
-      className="prose dark:prose-invert"
-      remarkPlugins={[remarkGfm]}
-    >
-      {task?.description || "Task without description"}
-    </Markdown>
-  )
+  return <Client task={task} />
 }
