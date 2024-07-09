@@ -14,7 +14,7 @@ import {
 
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
-import Tiptap from "./tiptap"
+import Tiptap from "@/components/editor/tiptap"
 import { Button } from "@/components/ui/button";
 import {
   Form,

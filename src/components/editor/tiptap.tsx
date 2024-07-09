@@ -4,7 +4,7 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { Markdown } from 'tiptap-markdown';
 
-import Toobar from './tiptap-toolbar'
+import Toobar from '@/components/editor/tiptap-toolbar'
 
 interface TiptapProps {
   description: string

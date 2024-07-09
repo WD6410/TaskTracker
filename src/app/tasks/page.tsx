@@ -3,7 +3,7 @@ import prisma from "@/lib/database"
 import { auth } from "@clerk/nextjs";
 
 import Clock from "@/components/clock";
-import CreateTask from "@/components/create-task";
+import CreateTask from "@/components/tasks/create-task";
 import { columns } from "@/components/tasks/columns"
 import { DataTable } from "@/components/ui/data-table";
 

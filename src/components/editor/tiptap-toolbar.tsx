@@ -14,8 +14,8 @@ import {
   Code
 } from 'lucide-react'
 
-import { Toggle } from './ui/toggle'
-import { Separator } from './ui/separator'
+import { Toggle } from '@/components/ui/toggle'
+import { Separator } from '@/components/ui/separator'
 
 interface ToolbarProps {
   editor: Editor | null

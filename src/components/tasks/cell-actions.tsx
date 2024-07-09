@@ -19,8 +19,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button";
-import EditTask from "@/components/edit-task";
-import DeleteAlert from "@/components/delete-alert";
+import EditTask from "@/components/tasks/edit-task";
+import DeleteAlert from "@/components/tasks/delete-task";
 
 interface CellActionProps {
   data: Task

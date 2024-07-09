@@ -8,11 +8,10 @@ import { ArrowLeft, Edit } from 'lucide-react';
 
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import EditTask from '../edit-task';
+import EditTask from './edit-task';
 import Link from 'next/link';
-import { Separator } from '@radix-ui/react-separator';
 
-export default function Client({ task }: { task: Task }) {
+export default function TaskClient({ task }: { task: Task }) {
   const [openEdit, setOpenEdit] = useState<boolean>(false);
 
   const details = [

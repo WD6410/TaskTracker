@@ -2,7 +2,7 @@ import prisma from "@/lib/database";
 
 import { auth } from "@clerk/nextjs";
 
-import Client from "@/components/tasks/client";
+import TaskClient from "@/components/tasks/task-client";
 
 const loadTask = async (id: string) => {
   try {
@@ -28,5 +28,5 @@ export default async function Task({ params }: { params: { id: string } }) {
     return <div>Task not found</div>
   }
 
-  return <Client task={task} />
+  return <TaskClient task={task} />
 }
