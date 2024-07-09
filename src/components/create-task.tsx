@@ -14,7 +14,7 @@ import {
 
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea"
+import Tiptap from "./tiptap"
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -49,9 +49,6 @@ const formSchema = z.object({
   description: z.string()
     .min(10, {
       message: "Description must be at least 10 characters.",
-    })
-    .max(500, {
-      message: "Description must not be longer than 500 characters.",
     }),
   priority: z.string({
     required_error: "Select the task priority",
@@ -148,10 +145,9 @@ export default function CreateTask() {
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Textarea
-                        placeholder="Description of the task"
-                        className="max-h-56"
-                        {...field}
+                      <Tiptap
+                        description={field.value}
+                        onChange={field.onChange}
                       />
                     </FormControl>
                     <FormMessage />
