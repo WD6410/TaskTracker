@@ -109,7 +109,7 @@ export default function CreateTask() {
           <PlusIcon className="w-5 h-5 ml-2" />
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-w-[700px]">
         <DialogHeader className="mb-2">
           <DialogTitle className="text-xl">Create a new task</DialogTitle>
         </DialogHeader>
@@ -118,65 +118,63 @@ export default function CreateTask() {
             onSubmit={form.handleSubmit(handleSubmit)}
             className="space-y-6"
           >
-            <div className="space-y-5">
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => {
-                  return (
-                    <FormItem>
-                      <FormLabel>Title</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Title"
-                          type="text"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
-              />
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => {
+                return (
                   <FormItem>
-                    <FormLabel>Description</FormLabel>
+                    <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Tiptap
-                        description={field.value}
-                        onChange={field.onChange}
+                      <Input
+                        placeholder="Title"
+                        type="text"
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="priority"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Priority</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select the task priority" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="high">High</SelectItem>
-                        <SelectItem value="medium">Medium</SelectItem>
-                        <SelectItem value="low">Low</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+                );
+              }}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Tiptap
+                      description={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="priority"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Priority</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select the task priority" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="high">High</SelectItem>
+                      <SelectItem value="medium">Medium</SelectItem>
+                      <SelectItem value="low">Low</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant="ghost" disabled={isLoading} className="hover:text-red-500">

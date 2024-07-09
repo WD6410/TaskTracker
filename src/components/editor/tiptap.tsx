@@ -17,7 +17,7 @@ const Tiptap = ({ description, onChange }: TiptapProps) => {
     content: description,
     editorProps: {
       attributes: {
-        class: 'cursor-text rounded-md min-h-[150px] max-h-[200px] overflow-y-auto p-4 focus:outline-none border focus:border-white prose dark:prose-invert'
+        class: 'cursor-text rounded-md min-h-[150px] max-h-[400px] overflow-y-auto p-4 focus:outline-none border focus:border-white prose dark:prose-invert'
       }
     },
     onUpdate({ editor }) {
