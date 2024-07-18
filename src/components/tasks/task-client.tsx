@@ -1,18 +1,45 @@
 "use client"
 
 import { useState } from 'react'
-
 import { Task } from '@prisma/client'
-
-import { ArrowLeft, Edit } from 'lucide-react';
-
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import Link from 'next/link';
+import {
+  ArrowLeft,
+  Edit,
+  Trash
+} from 'lucide-react';
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import EditTask from './edit-task';
-import Link from 'next/link';
+import DeleteAlert from "./delete-task";
 
 export default function TaskClient({ task }: { task: Task }) {
+  const router = useRouter();
+
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+
+  const onClose = () => {
+    setOpenAlert(false)
+  }
+
+  const handleDelete = async () => {
+    try {
+      setLoading(true);
+      await fetch(`/api/tasks/${task.id}`, { method: "DELETE" })
+      toast.success('Task deleted successfully.');
+      router.push('/tasks')
+      router.refresh()
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+      onClose();
+    }
+  }
 
   const details = [
     { key: 'Created At', value: task.createdAt.toLocaleTimeString() },
@@ -36,8 +63,17 @@ export default function TaskClient({ task }: { task: Task }) {
           <div className="flex-1 space-y-6">
             <div className="flex items-center gap-10 border-b pb-8 pr-8">
               <h1 className="text-5xl font-bold">{task.title}</h1>
-              <span onClick={() => setOpenEdit(true)}>
+              <span
+                className='hover:opacity-50 transition-opacity duration-200 ease-in-out cursor-pointer'
+                onClick={() => setOpenEdit(true)}
+              >
                 <Edit className="h-6 w-6" />
+              </span>
+              <span
+                className='hover:opacity-50 transition-opacity duration-200 ease-in-out cursor-pointer'
+                onClick={() => setOpenAlert(true)}
+              >
+                <Trash className="h-6 w-6" />
               </span>
             </div>
             <Markdown
@@ -61,10 +97,18 @@ export default function TaskClient({ task }: { task: Task }) {
           </div>
         </div>
       </div>
+
       <EditTask
         task={task}
         isOpen={openEdit}
         onClose={() => setOpenEdit(false)}
+      />
+
+      <DeleteAlert
+        isOpen={openAlert}
+        loading={loading}
+        onClose={onClose}
+        onConfirm={handleDelete}
       />
     </>
   )
