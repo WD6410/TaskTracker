@@ -14,6 +14,7 @@ import CellAction from "./cell-actions"
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header"
 
 import { Task } from "@prisma/client"
+import { LinkIcon } from 'lucide-react';
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -23,9 +24,10 @@ export const columns: ColumnDef<Task>[] = [
       return (
         <Link
           href={`/tasks/${row.original.id}`}
-          className="font-semibold hover:underline"
+          className="flex items-center gap-1 font-semibold hover:underline"
         >
           {row.getValue("title")}
+          <LinkIcon className='w-4 h-4' />
         </Link>
       )
     },
