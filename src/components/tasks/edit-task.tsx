@@ -109,7 +109,7 @@ export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
 
       if (res.ok) {
         toast.success(data.msg);
-        router.refresh();
+        window.location.reload();        
         onClose();
       } else {
         toast.error(data.msg);
