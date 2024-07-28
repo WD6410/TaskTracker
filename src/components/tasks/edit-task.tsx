@@ -77,9 +77,9 @@ interface EditTaskProps {
 }
 
 export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
-  const [isLoading, setIsLoading] = useState(false);
-
   const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -109,7 +109,7 @@ export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
 
       if (res.ok) {
         toast.success(data.msg);
-        window.location.reload();        
+        router.refresh()
         onClose();
       } else {
         toast.error(data.msg);
@@ -118,7 +118,6 @@ export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
       console.log(error);
     } finally {
       setIsLoading(false);
-      form.reset();
     }
   };
   return (
