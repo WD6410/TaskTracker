@@ -105,7 +105,7 @@ export default function CreateTask() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="font-semibold">
-          Add new
+          Add a new task
           <PlusIcon className="w-5 h-5 ml-2" />
         </Button>
       </DialogTrigger>

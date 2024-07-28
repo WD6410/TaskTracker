@@ -25,7 +25,9 @@ export default async function TasksPage() {
 
   return (
     <>
-      <CreateTask />
+      <div className="w-full flex justify-center">
+        <CreateTask />
+      </div>
       <div className="w-full bg-black bg-opacity-40 backdrop-blur-xl p-5 mb-4 rounded-xl animate-fade-left">
         <DataTable columns={columns} data={tasks} />
       </div>
