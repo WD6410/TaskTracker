@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -9,13 +12,31 @@ import {
 import { Button } from "@/components/ui/button";
 
 interface DeleteAlertProps {
+  taskId: string;
   isOpen: boolean;
-  loading: boolean;
   onClose: () => void;
-  onConfirm: () => void;
 }
 
-export default function DeleteAlert({ isOpen, loading, onClose, onConfirm }: DeleteAlertProps) {
+export default function DeleteAlert({ isOpen, taskId, onClose }: DeleteAlertProps) {
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+
+  const handleDelete = async () => {
+    try {
+      setLoading(true);
+      await fetch(`/api/tasks/${taskId}`, { method: "DELETE" })
+      router.push('/tasks');
+      router.refresh();
+      toast.success('Task deleted successfully.');
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+      onClose();
+    }
+  }
+
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent>
@@ -36,7 +57,7 @@ export default function DeleteAlert({ isOpen, loading, onClose, onConfirm }: Del
           <Button
             variant="destructive"
             disabled={loading}
-            onClick={onConfirm}
+            onClick={handleDelete}
           >
             Confirm
           </Button>

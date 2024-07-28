@@ -1,15 +1,8 @@
 "use client";
 
 import { useState } from "react";
-
-import { toast } from "sonner";
-
-import { useRouter } from "next/navigation";
-
 import { Task } from "@prisma/client";
-
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,29 +20,8 @@ interface CellActionProps {
 }
 
 export default function CellAction({ data }: CellActionProps) {
-  const router = useRouter();
-
-  const [openAlert, setOpenAlert] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const onClose = () => {
-    setOpenAlert(false)
-  }
-
-  const handleDelete = async () => {
-    try {
-      setLoading(true);
-      await fetch(`/api/tasks/${data.id}`, { method: "DELETE" })
-      router.refresh();
-      toast.success('Task deleted successfully.');
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-      onClose();
-    }
-  }
 
   return (
     <>
@@ -67,24 +39,21 @@ export default function CellAction({ data }: CellActionProps) {
             <Edit className="mr-2 h-4 w-4" />
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setOpenAlert(true)}>
+          <DropdownMenuItem onClick={() => setOpenDelete(true)}>
             <Trash className="mr-2 h-4 w-4 " />
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-
       <EditTask
         task={data}
         isOpen={openEdit}
         onClose={() => setOpenEdit(false)}
       />
-
       <DeleteAlert
-        isOpen={openAlert}
-        loading={loading}
-        onClose={onClose}
-        onConfirm={handleDelete}
+        taskId={data.id}
+        isOpen={openDelete}
+        onClose={() => setOpenDelete(false)}
       />
     </>
   )
