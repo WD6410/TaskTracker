@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Task } from '@prisma/client'
 import Link from 'next/link';
 import {
@@ -14,8 +14,15 @@ import EditTask from './edit-task';
 import DeleteAlert from "./delete-task";
 
 export default function TaskClient({ task }: { task: Task }) {
+  const [isClient, setIsClient] = useState<boolean>(false);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsClient(true)
+  }, []);
+
+  if (!isClient) return null
 
   const details = [
     { key: 'Created At', value: task.createdAt.toLocaleTimeString() },
